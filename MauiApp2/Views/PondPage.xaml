@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp2.Views.PondPage"
+             Title="الملاحظات اليومية">
+  <ScrollView>
+    <VerticalStackLayout Padding="16" Spacing="12">
+      <Image Source="fish.svg" HeightRequest="48" />
+      <Label Text="{Binding Pond.Name}" FontSize="22" FontAttributes="Bold"/>
+      <Frame>
+        <VerticalStackLayout Spacing="8">
+          <Label Text="إضافة / تعديل ملاحظة" FontAttributes="Bold"/>
+          <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+            <Label Text="التاريخ:" Grid.Row="0"/><DatePicker Grid.Row="0" Grid.Column="1" Date="{Binding Date}"/>
+            <Label Text="درجة الحرارة:" Grid.Row="1"/><Entry Grid.Row="1" Grid.Column="1" Text="{Binding Temperature}" Keyboard="Numeric"/>
+            <Label Text="التغذية:" Grid.Row="2"/><Entry Grid.Row="2" Grid.Column="1" Text="{Binding Feeding}"/>
+            <Label Text="النفوق:" Grid.Row="3"/><Entry Grid.Row="3" Grid.Column="1" Text="{Binding Mortality}" Keyboard="Numeric"/>
+            <Label Text="pH:" Grid.Row="4"/><Entry Grid.Row="4" Grid.Column="1" Text="{Binding PH}" Keyboard="Numeric"/>
+            <Label Text="الأكسجين المذاب (mg/L):" Grid.Row="5"/><Entry Grid.Row="5" Grid.Column="1" Text="{Binding DissolvedOxygen}" Keyboard="Numeric"/>
+            <Label Text="الأمونيا NH3 (mg/L):" Grid.Row="6"/><Entry Grid.Row="6" Grid.Column="1" Text="{Binding Ammonia}" Keyboard="Numeric"/>
+            <Label Text="الملوحة (ppt):" Grid.Row="7"/><Entry Grid.Row="7" Grid.Column="1" Text="{Binding Salinity}" Keyboard="Numeric"/>
+            <Label Text="ملاحظات إضافية:" Grid.Row="8"/><Entry Grid.Row="8" Grid.Column="1" Text="{Binding Comment}"/>
+            <Grid Grid.Row="9" Grid.ColumnSpan="2" ColumnDefinitions="*,*,*">
+              <Button Text="إضافة" Grid.Column="0" Command="{Binding AddCommand}"/>
+              <Button Text="حفظ التعديل" Grid.Column="1" Command="{Binding SaveEditCommand}"/>
+              <Button Text="تصدير Excel" Grid.Column="2" Command="{Binding ExportCommand}" />
+            </Grid>
+          </Grid>
+        </VerticalStackLayout>
+      </Frame>
+      <Label Text="الملاحظات السابقة" FontAttributes="Bold"/>
+      <CollectionView ItemsSource="{Binding Notes}">
+        <CollectionView.ItemTemplate>
+          <DataTemplate>
+            <Frame>
+              <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
+                <VerticalStackLayout>
+                  <Label Text="{Binding Date}" FontAttributes="Bold"/>
+                  <Label>
+                    <Label.FormattedText>
+                      <FormattedString>
+                        <Span Text="حرارة: "/><Span Text="{Binding Temperature}"/>
+                        <Span Text=" | تغذية: "/><Span Text="{Binding Feeding}"/>
+                        <Span Text=" | نفوق: "/><Span Text="{Binding Mortality}"/>
+                      </FormattedString>
+                    </Label.FormattedText>
+                  </Label>
+                  <Label>
+                    <Label.FormattedText>
+                      <FormattedString>
+                        <Span Text="pH: "/><Span Text="{Binding PH}"/>
+                        <Span Text=" | DO: "/><Span Text="{Binding DissolvedOxygen}"/>
+                        <Span Text=" | NH3: "/><Span Text="{Binding Ammonia}"/>
+                        <Span Text=" | ملوحة: "/><Span Text="{Binding Salinity}"/>
+                      </FormattedString>
+                    </Label.FormattedText>
+                  </Label>
+                  <Label Text="{Binding Comment}"/>
+                </VerticalStackLayout>
+                <Button Grid.Column="1" Text="تعديل" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EditCommand}" CommandParameter="{Binding}" />
+                <Button Grid.Column="2" Text="حذف" BackgroundColor="{StaticResource ErrorColor}" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteCommand}" CommandParameter="{Binding}" />
+              </Grid>
+            </Frame>
+          </DataTemplate>
+        </CollectionView.ItemTemplate>
+      </CollectionView>
+    </VerticalStackLayout>
+  </ScrollView>
+</ContentPage>

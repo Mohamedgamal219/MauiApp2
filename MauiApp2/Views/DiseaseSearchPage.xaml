@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp2.Views.DiseaseSearchPage"
+             Title="بحث أمراض الأسماك">
+  <ScrollView>
+    <VerticalStackLayout Padding="16" Spacing="10">
+      <Image Source="disease.svg" HeightRequest="48" />
+      <Label Text="اكتب وصف الأعراض:"/>
+      <Entry Placeholder="مثال: بقع بيضاء، فقدان شهية..." Text="{Binding Query}"/>
+      <Button Text="بحث" Command="{Binding SearchCommand}"/>
+      <CollectionView ItemsSource="{Binding Results}">
+        <CollectionView.ItemTemplate>
+          <DataTemplate>
+            <Frame>
+              <VerticalStackLayout>
+                <Label Text="{Binding Name}" FontAttributes="Bold"/>
+                <Label Text="{Binding Description}"/>
+                <Label>
+                  <Label.FormattedText>
+                    <FormattedString>
+                      <Span Text="الأعراض: "/><Span Text="{Binding Symptoms}"/>
+                    </FormattedString>
+                  </Label.FormattedText>
+                </Label>
+                <Label>
+                  <Label.FormattedText>
+                    <FormattedString>
+                      <Span Text="العلاج: "/><Span Text="{Binding Treatment}"/>
+                    </FormattedString>
+                  </Label.FormattedText>
+                </Label>
+              </VerticalStackLayout>
+            </Frame>
+          </DataTemplate>
+        </CollectionView.ItemTemplate>
+      </CollectionView>
+    </VerticalStackLayout>
+  </ScrollView>
+</ContentPage>

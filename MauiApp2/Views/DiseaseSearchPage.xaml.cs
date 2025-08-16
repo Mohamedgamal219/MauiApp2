@@ -1,0 +1,1 @@
+using MauiApp2.ViewModels; namespace MauiApp2.Views; public partial class DiseaseSearchPage : ContentPage { public DiseaseSearchPage(DiseaseSearchViewModel vm){ InitializeComponent(); BindingContext=vm; } }

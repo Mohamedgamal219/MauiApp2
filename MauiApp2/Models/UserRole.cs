@@ -1,0 +1,1 @@
+namespace MauiApp2.Models; public enum UserRole { Admin, Manager, Engineer, Viewer }

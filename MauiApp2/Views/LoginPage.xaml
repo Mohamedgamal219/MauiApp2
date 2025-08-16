@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp2.Views.LoginPage"
+             Title="تسجيل الدخول">
+  <ScrollView>
+    <VerticalStackLayout Padding="24" Spacing="12">
+      <Image Source="login.svg" HeightRequest="64" HorizontalOptions="Center"/>
+      <Label Text="تسجيل الدخول" FontSize="24" HorizontalOptions="Center" />
+      <VerticalStackLayout>
+        <Label Text="اسم المستخدم:"/>
+        <Entry Text="{Binding Username}" Placeholder="ادخل اسم المستخدم"/>
+      </VerticalStackLayout>
+      <VerticalStackLayout>
+        <Label Text="كلمة المرور:"/>
+        <Entry Text="{Binding Password}" Placeholder="ادخل كلمة المرور" IsPassword="True"/>
+      </VerticalStackLayout>
+      <Button Text="دخول" Command="{Binding LoginCommand}"/>
+    </VerticalStackLayout>
+  </ScrollView>
+</ContentPage>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp2.Views.DashboardPage"
+             Title="الترحيب">
+  <ScrollView>
+    <VerticalStackLayout Padding="16" Spacing="12">
+      <Image Source="home.svg" HeightRequest="48" />
+      <Label>
+        <Label.FormattedText>
+          <FormattedString>
+            <Span Text="مرحباً، "/>
+            <Span Text="{Binding CurrentUser.Username}"/>
+            <Span Text=" | الدور: "/>
+            <Span Text="{Binding CurrentUser.Role}"/>
+          </FormattedString>
+        </Label.FormattedText>
+      </Label>
+      <Frame>
+        <VerticalStackLayout Spacing="10">
+          <Label Text="إنشاء / تعديل مزرعة" FontAttributes="Bold"/>
+          <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto">
+            <Label Text="اسم المزرعة:" Grid.Row="0"/><Entry Grid.Row="0" Grid.Column="1" Text="{Binding FarmName}"/>
+            <Label Text="الموقع:" Grid.Row="1"/><Entry Grid.Row="1" Grid.Column="1" Text="{Binding FarmLocation}"/>
+            <Grid Grid.Row="2" Grid.ColumnSpan="2" ColumnDefinitions="*,*,*">
+              <Button Text="إضافة" Grid.Column="0" Command="{Binding AddCommand}"/>
+              <Button Text="حفظ التعديل" Grid.Column="1" Command="{Binding SaveEditCommand}"/>
+              <Button Text="تسجيل خروج" Grid.Column="2" Command="{Binding LogoutCommand}" BackgroundColor="{StaticResource ErrorColor}"/>
+            </Grid>
+          </Grid>
+        </VerticalStackLayout>
+      </Frame>
+      <Label Text="قائمة المزارع" FontAttributes="Bold"/>
+      <CollectionView ItemsSource="{Binding Farms}">
+        <CollectionView.ItemTemplate>
+          <DataTemplate>
+            <Frame>
+              <Grid ColumnDefinitions="*,Auto,Auto,Auto" ColumnSpacing="8">
+                <VerticalStackLayout>
+                  <Label Text="{Binding Name}" FontAttributes="Bold"/>
+                  <Label Text="{Binding Location}" />
+                </VerticalStackLayout>
+                <Button Grid.Column="1" Text="فتح" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.OpenFarmCommand}" CommandParameter="{Binding}" />
+                <Button Grid.Column="2" Text="تعديل" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EditCommand}" CommandParameter="{Binding}" />
+                <Button Grid.Column="3" Text="حذف" BackgroundColor="{StaticResource ErrorColor}"
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteCommand}" CommandParameter="{Binding}" />
+              </Grid>
+            </Frame>
+          </DataTemplate>
+        </CollectionView.ItemTemplate>
+      </CollectionView>
+      <Button Text="بحث أمراض الأسماك" Clicked="OnOpenDiseaseSearch" />
+    </VerticalStackLayout>
+  </ScrollView>
+</ContentPage>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp2.Views.FarmPage"
+             Title="إدارة الأحواض">
+  <ScrollView>
+    <VerticalStackLayout Padding="16" Spacing="12">
+      <Image Source="farm.svg" HeightRequest="48" />
+      <Label Text="{Binding Farm.Name}" FontSize="22" FontAttributes="Bold"/>
+      <Label Text="{Binding Farm.Location}" />
+      <Frame>
+        <VerticalStackLayout Spacing="8">
+          <Label Text="إضافة / تعديل حوض" FontAttributes="Bold"/>
+          <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
+            <Label Text="اسم الحوض:" Grid.Row="0" /><Entry Grid.Row="0" Grid.Column="1" Text="{Binding Name}"/>
+            <Label Text="المساحة (م²):" Grid.Row="1" /><Entry Grid.Row="1" Grid.Column="1" Text="{Binding Area}" Keyboard="Numeric"/>
+            <Label Text="العمق (م):" Grid.Row="2" /><Entry Grid.Row="2" Grid.Column="1" Text="{Binding Depth}" Keyboard="Numeric"/>
+            <Label Text="نوع المياه:" Grid.Row="3" /><Entry Grid.Row="3" Grid.Column="1" Text="{Binding WaterType}"/>
+            <Label Text="عدد الأسماك:" Grid.Row="4" /><Entry Grid.Row="4" Grid.Column="1" Text="{Binding FishCount}" Keyboard="Numeric"/>
+            <Grid Grid.Row="5" Grid.ColumnSpan="2" ColumnDefinitions="*,*,*">
+              <Button Text="إضافة" Grid.Column="0" Command="{Binding AddCommand}"/>
+              <Button Text="حفظ التعديل" Grid.Column="1" Command="{Binding SaveEditCommand}"/>
+            </Grid>
+          </Grid>
+        </VerticalStackLayout>
+      </Frame>
+      <CollectionView ItemsSource="{Binding Ponds}">
+        <CollectionView.ItemTemplate>
+          <DataTemplate>
+            <Frame>
+              <Grid ColumnDefinitions="*,Auto,Auto,Auto" ColumnSpacing="8">
+                <VerticalStackLayout>
+                  <Label Text="{Binding Name}" FontAttributes="Bold"/>
+                  <Label>
+                    <Label.FormattedText>
+                      <FormattedString>
+                        <Span Text="مساحة: "/><Span Text="{Binding Area}"/>
+                        <Span Text=" | عمق: "/><Span Text="{Binding Depth}"/>
+                        <Span Text=" | نوع المياه: "/><Span Text="{Binding WaterType}"/>
+                        <Span Text=" | عدد الأسماك: "/><Span Text="{Binding FishCount}"/>
+                      </FormattedString>
+                    </Label.FormattedText>
+                  </Label>
+                </VerticalStackLayout>
+                <Button Grid.Column="1" Text="فتح" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.OpenPondCommand}" CommandParameter="{Binding}" />
+                <Button Grid.Column="2" Text="تعديل" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EditCommand}" CommandParameter="{Binding}" />
+                <Button Grid.Column="3" Text="حذف" BackgroundColor="{StaticResource ErrorColor}" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteCommand}" CommandParameter="{Binding}" />
+              </Grid>
+            </Frame>
+          </DataTemplate>
+        </CollectionView.ItemTemplate>
+      </CollectionView>
+    </VerticalStackLayout>
+  </ScrollView>
+</ContentPage>
